@@ -1,4 +1,4 @@
-USE [Enbrel_TestCRX]
+USE [Enbrel_Production]
 GO
 SET ANSI_NULLS ON
 GO

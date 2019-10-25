@@ -1,7 +1,6 @@
-USE [Enbrel_TestCRX]
+USE [Enbrel_Production]
 GO
-
-CREATE SEQUENCE [dbo].[JW_Batch_Seq]
+CREATE OR ALTER SEQUENCE [dbo].[JW_Batch_Seq]
  AS [numeric](38, 0)
  START WITH 1
  INCREMENT BY 1
