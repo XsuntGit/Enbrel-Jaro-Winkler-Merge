@@ -79,9 +79,11 @@ BEGIN TRY
 						  ,[Email]
 						  ,[DOB]
 					FROM [dbo].[tblPatientInfo] with (nolock)
-  					WHERE [NeedToRunJaroWinkler] = 1
+  					WHERE [ActiveFlag] = 1
+						AND [NeedToRunJaroWinkler] = 1
 				) tblB
-			WHERE tblA.[NeedToRunJaroWinkler] = 0
+			WHERE tblA.[ActiveFlag] = 1
+				AND tblA.[NeedToRunJaroWinkler] = 0
 				AND [dbo].[fn_CLR_Fuzzy_JaroWinkler](ISNULL(tblA.[FirstName],'') + ISNULL(tblA.[LastName],'') + [dbo].[fn_StripPatternFromString](tblA.[DOB],'[A-Za-z0-9]') + [dbo].[fn_StripPatternFromString](LEFT(tblA.[Zip],3),'[A-Za-z0-9]'), ISNULL(tblB.[FirstName],'') + ISNULL(tblB.[LastName],'') + [dbo].[fn_StripPatternFromString](tblB.[DOB],'[A-Za-z0-9]') + [dbo].[fn_StripPatternFromString](LEFT(tblB.[Zip],3),'[A-Za-z0-9]')) >= @jw_threshold
 		) tmp1
 		) tmp2
@@ -228,9 +230,11 @@ BEGIN TRY
 						  ,[Email]
 						  ,[DOB]
 					FROM [dbo].[tblPatientInfo] with (nolock)
-  					WHERE [NeedToRunJaroWinkler] = 1
+  					WHERE [ActiveFlag] = 1
+						AND [NeedToRunJaroWinkler] = 1
 				) tblB
-			WHERE tblA.[NeedToRunJaroWinkler] = 1
+			WHERE tblA.[ActiveFlag] = 1
+				AND tblA.[NeedToRunJaroWinkler] = 1
 				AND tblA.[PatientID] != tblB.[PatientID]
 				AND [dbo].[fn_CLR_Fuzzy_JaroWinkler](ISNULL(tblA.[FirstName],'') + ISNULL(tblA.[LastName],'') + [dbo].[fn_StripPatternFromString](tblA.[DOB],'[A-Za-z0-9]') + [dbo].[fn_StripPatternFromString](LEFT(tblA.[Zip],3),'[A-Za-z0-9]'), ISNULL(tblB.[FirstName],'') + ISNULL(tblB.[LastName],'') + [dbo].[fn_StripPatternFromString](tblB.[DOB],'[A-Za-z0-9]') + [dbo].[fn_StripPatternFromString](LEFT(tblB.[Zip],3),'[A-Za-z0-9]')) >= @jw_threshold
 		) tmp1
